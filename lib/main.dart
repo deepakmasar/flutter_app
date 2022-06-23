@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            child:RiveAnimation.asset('image/new_file.riv',animations: ['Hand up '],),
+            child:Text('data'),
           ),
         ),
       ),
