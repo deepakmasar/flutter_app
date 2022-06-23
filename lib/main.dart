@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 
-void main(List<String> args) {
-  runApp(nikhil());
-}
+void main() => runApp(MyApp());
 
-class nikhil extends StatelessWidget {
-  const nikhil({Key key}) : super(key: key);
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Material(
-        child: Container(
-          child: Text('nikhil is my name'),
+      title: 'Material App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Material App Bar'),
+        ),
+        body: Center(
+          child: Container(
+            child:RiveAnimation.asset('image/new_file.riv',animations: ['Hand up '],),
+          ),
         ),
       ),
     );
