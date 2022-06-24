@@ -161,62 +161,69 @@ class _SignupScreen extends State<SignupScreen> {
                 ),
                 Container(
                   height: 120,
-                  child: Row(children: [
-                    Padding(padding: EdgeInsets.fromLTRB(80, 0, 0, 0)),
-                    FlatButton(
-                      height: 50,
-                      minWidth: 50,
-                      onPressed: () {},
-                      child: Container(
-                        child: Image.asset(
-                          'assets/images/image 5.png',
-                          height: 50,
-                          width: 50,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color.fromARGB(99, 171, 167, 167),
-                            width: 5,
+                  width: 400,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Padding(padding: EdgeInsets.fromLTRB(80, 0, 0, 0)),
+                          //google login button
+                          FlatButton(
+                            height: 50,
+                            minWidth: 50,
+                            onPressed: () {},
+                            child: Container(
+                              child: Image.asset(
+                                'assets/images/image 5.png',
+                                height: 50,
+                                width: 50,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color.fromARGB(99, 171, 167, 167),
+                                  width: 5,
+                                ),
+                                borderRadius: BorderRadius.circular(60),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 3,
+                                    offset: Offset.zero,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(60),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 3,
-                              offset: Offset.zero,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
-                    FlatButton(
-                      height: 50,
-                      minWidth: 50,
-                      onPressed: () {},
-                      child: Container(
-                        child: Image.asset(
-                          'assets/images/image 6.png',
-                          height: 50,
-                          width: 50,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color.fromARGB(99, 171, 167, 167),
-                            width: 5,
+                          // Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
+                          FlatButton(
+                            height: 50,
+                            minWidth: 50,
+                            onPressed: () {},
+                            child: Container(
+                              child: Image.asset(
+                                'assets/images/image 6.png',
+                                height: 50,
+                                width: 50,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color.fromARGB(99, 171, 167, 167),
+                                  width: 5,
+                                ),
+                                borderRadius: BorderRadius.circular(60),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 3,
+                                    offset: Offset.zero,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(60),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 3,
-                              offset: Offset.zero,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ]),
+                        ]),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -234,6 +241,7 @@ class _SignupScreen extends State<SignupScreen> {
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.red,
+                            fontWeight: FontWeight.w400,
                             fontFamily: 'MontserratAlternates'),
                       ),
                       onPressed: () {

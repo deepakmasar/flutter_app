@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Center(
           child: Container(
-        padding: EdgeInsets.fromLTRB(0, 280, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         width: 400,
         height: 1000,
         decoration: const BoxDecoration(
@@ -37,40 +37,43 @@ class _HomeScreenState extends State<HomeScreen> {
             Color.fromARGB(150, 229, 229, 229),
           ],
         )),
-        child: Column(children: [
+        child: Stack(alignment: Alignment.center, children: [
           Center(
               child: Image.asset(
             'assets/images/logo.png',
-            height: 270,
-            width: 270,
-            // color: Colors.red,
+            height: 300,
+            width: 300,
           )),
-          // Row(children: const [
-          //   Padding(
-          //       padding: EdgeInsets.symmetric(
-          //     horizontal: 45,
-          //   )),
-          //   Text(
-          //     'NUP',
-          //     style: TextStyle(
-          //       fontSize: 50,
-          //       fontFamily: 'Montserrat',
-          //       fontWeight: FontWeight.w900,
-          //       color: Colors.red,
-          //       letterSpacing: 3.0,
-          //     ),
-          //   ),
-          //   Text(
-          //     'INS',
-          //     style: TextStyle(
-          //       fontSize: 50,
-          //       fontFamily: 'Montserrat',
-          //       fontWeight: FontWeight.w900,
-          //       color: Color.fromARGB(255, 66, 60, 60),
-          //       letterSpacing: 3.0,
-          //     ),
-          //   ),
-          // ]),
+          Container(
+            padding: EdgeInsets.only(top: 150),
+            alignment: Alignment.center,
+            child: Row(children: const [
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                horizontal: 57,
+              )),
+              Text(
+                'NUP',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromARGB(255, 251, 19, 2),
+                  letterSpacing: 3.0,
+                ),
+              ),
+              Text(
+                'INS',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromARGB(255, 15, 14, 14),
+                  letterSpacing: 3.0,
+                ),
+              ),
+            ]),
+          ),
         ]),
       )),
     );

@@ -22,12 +22,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final passwordFocusNode = FocusNode();
   final emailFocusNode = FocusNode();
   String password = 'nupins123';
-  String animationType = 'idle';
+  late Alignment riveAlign;
+  late String animationType;
   late RiveAnimationController _riveAnimationController;
   bool _isPlaying = false;
 
@@ -39,103 +40,139 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void initState() {
-    // _riveAnimationController = OneShotAnimation(
-    //   'Blink',
-    //   autoplay: false,
-    // );
-    setState(() {
-      animationType = 'idle';
-    });
-
+    // emailFocusNode.addListener(() {
+    //   if (emailFocusNode.hasFocus) {
+    //     setState(() {
+    //       animationType = 'Yess';
+    //       riveAlign = Alignment.topLeft;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       animationType = 'raise hands';
+    //       riveAlign = Alignment.topRight;
+    //     });
+    //   }
+    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
     return Scaffold(
         body: SafeArea(
       child: Padding(
           padding: const EdgeInsets.all(0),
           child: ListView(
             children: <Widget>[
-              Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  padding: const EdgeInsets.all(0),
-                  child: Row(children: const [
-                    Padding(padding: EdgeInsets.fromLTRB(95, 200, 0, 0)),
-                    Text(
-                      'NUP',
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w900,
-                        color: Colors.red,
-                        letterSpacing: 3.0,
-                      ),
-                    ),
-                    Text(
-                      'INS',
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w900,
-                        color: Color.fromARGB(255, 66, 60, 60),
-                        letterSpacing: 3.0,
-                      ),
-                    ),
-                  ])),
-              Container(
-                  alignment: Alignment.topCenter,
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                  child: const Text(
-                    'LOGIN',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: 'MontserratAlternates',
-                      letterSpacing: 5.0,
-                    ),
-                  )),
               Center(
                   child: GestureDetector(
                 onTapDown: (_) =>
                     _activeRiveAnimation(_riveAnimationController),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 100,
-                  width: 300,
-                  child:
-                      // RiveAnimation.asset(
-                      //   'assets/rive_character/new_file.riv',
-                      //   fit: BoxFit.contain,
-                      //   alignment: Alignment.center,
-                      //   controllers: [
-                      //     _riveAnimationController,
-                      //   ],
-                      // ),
-                      FlareActor(
-                    'assets/rive_character/Teddy_Login_Screen_example.flr',
-                    alignment: Alignment.center,
-                    fit: BoxFit.fitHeight,
-                    animation: animationType,
+                child: Stack(children: [
+                  //nupins logo
+                  Container(
+                      alignment: Alignment.topCenter,
+                      height: height * 0.17,
+                      padding: EdgeInsets.only(top: 50),
+                      child: Row(children: const [
+                        Padding(padding: EdgeInsets.only(left: 95)),
+                        Text(
+                          'NUP',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            color: Colors.red,
+                            letterSpacing: 3.0,
+                          ),
+                        ),
+                        Text(
+                          'INS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            color: Color.fromARGB(255, 66, 60, 60),
+                            letterSpacing: 3.0,
+                          ),
+                        ),
+                      ])),
+                  //login text
+                  Container(
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.fromLTRB(0, 140, 0, 60),
+                      child: const Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'MontserratAlternates',
+                          letterSpacing: 5.0,
+                        ),
+                      )),
+                  //rive character
+                  Container(
+                    alignment: Alignment.topRight,
+                    padding: EdgeInsets.fromLTRB(0, 110, 0, 0),
+                    child: Container(
+                      height: 130,
+                      width: 400,
+                      child: RiveAnimation.asset(
+                        'assets/rive_character/new_file.riv',
+                        fit: BoxFit.contain,
+                        alignment: emailFocusNode.hasFocus
+                            ? riveAlign = Alignment.topLeft
+                            : riveAlign = Alignment.topRight,
+                        animations: [
+                          emailFocusNode.hasFocus
+                              ? animationType = 'raise hand'
+                              : animationType = 'idle',
+                        ],
+                        // controllers: [
+                        //   _riveAnimationController,
+                        // ],
+                        //     FlareActor(
+                        //   'assets/rive_character/Teddy_Login_Screen_example.flr',
+                        //   alignment: Alignment.center,
+                        //   fit: BoxFit.fitHeight,
+                        //   animation: animationType,
+                        // ),
+                      ),
+                    ),
                   ),
-                ),
+                ]),
               )),
+              //email textfield
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: TextField(
-                  controller: nameController,
+                child: TextFormField(
+                  controller: emailController,
                   focusNode: emailFocusNode,
+                  autofocus: false,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'E-MAIL',
-                      labelStyle: TextStyle(
-                          fontSize: 15,
-                          letterSpacing: 3.0,
-                          fontFamily: 'MontserratAlternates'),
-                      prefixIcon: Icon(Icons.email)),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.blue,
+                    )),
+                    labelText: 'E-MAIL',
+                    labelStyle: TextStyle(
+                        fontSize: 15,
+                        letterSpacing: 3.0,
+                        fontFamily: 'MontserratAlternates'),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      // color:
+                      // emailFocusNode.hasFocus ? Colors.blue : Colors.black,
+                    ),
+                  ),
                 ),
               ),
+              //password textfield
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: GestureDetector(
@@ -149,6 +186,10 @@ class _LoginScreen extends State<LoginScreen> {
                         suffixIcon: Icon(Icons.remove_red_eye),
                         border: OutlineInputBorder(),
                         labelText: 'PASSWORD',
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Colors.blue,
+                        )),
                         labelStyle: TextStyle(
                             fontSize: 15,
                             letterSpacing: 3.0,
@@ -157,6 +198,7 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                 ),
               ),
+              //login button
               Container(
                   height: 70,
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -167,7 +209,7 @@ class _LoginScreen extends State<LoginScreen> {
                     onPressed: () {
                       if (passwordController.text.compareTo(password) == 0) {
                         setState(() {
-                          animationType = 'success';
+                          animationType = 'Yess';
                         });
                         Timer(
                             Duration(seconds: 1),
@@ -177,7 +219,7 @@ class _LoginScreen extends State<LoginScreen> {
                                         HomePage())));
                       } else {
                         setState(() {
-                          animationType = 'fail';
+                          animationType = 'Blink';
                         });
                       }
                       (_) => _activeRiveAnimation(_riveAnimationController);
@@ -193,6 +235,7 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                   )),
               Padding(padding: EdgeInsets.all(10)),
+              //forgot password
               TextButton(
                 onPressed: () {},
                 child: const Text(
@@ -202,6 +245,7 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                 ),
               ),
+              //divider
               Row(
                 children: const [
                   Padding(padding: EdgeInsets.all(10)),
@@ -230,67 +274,76 @@ class _LoginScreen extends State<LoginScreen> {
                   Padding(padding: EdgeInsets.all(10)),
                 ],
               ),
+              //google /linkedin login
               Container(
                 height: 120,
-                child: Row(children: [
-                  Padding(padding: EdgeInsets.fromLTRB(80, 0, 0, 0)),
-                  FlatButton(
-                    height: 50,
-                    minWidth: 50,
-                    onPressed: () {},
-                    child: Container(
-                      child: Image.asset(
-                        'assets/images/image 5.png',
-                        height: 50,
-                        width: 50,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color.fromARGB(99, 171, 167, 167),
-                          width: 5,
+                width: 400,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Padding(padding: EdgeInsets.fromLTRB(80, 0, 0, 0)),
+                        //google login button
+                        FlatButton(
+                          height: 50,
+                          minWidth: 50,
+                          onPressed: () {},
+                          child: Container(
+                            child: Image.asset(
+                              'assets/images/image 5.png',
+                              height: 50,
+                              width: 50,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color.fromARGB(99, 171, 167, 167),
+                                width: 5,
+                              ),
+                              borderRadius: BorderRadius.circular(60),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 3,
+                                  offset: Offset.zero,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(60),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3,
-                            offset: Offset.zero,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
-                  FlatButton(
-                    height: 50,
-                    minWidth: 50,
-                    onPressed: () {},
-                    child: Container(
-                      child: Image.asset(
-                        'assets/images/image 6.png',
-                        height: 50,
-                        width: 50,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color.fromARGB(99, 171, 167, 167),
-                          width: 5,
+                        // Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
+                        FlatButton(
+                          height: 50,
+                          minWidth: 50,
+                          onPressed: () {},
+                          child: Container(
+                            child: Image.asset(
+                              'assets/images/image 6.png',
+                              height: 50,
+                              width: 50,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color.fromARGB(99, 171, 167, 167),
+                                width: 5,
+                              ),
+                              borderRadius: BorderRadius.circular(60),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 3,
+                                  offset: Offset.zero,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(60),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3,
-                            offset: Offset.zero,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
+                      ]),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const Text(
                     'Does not have account?',
@@ -302,9 +355,11 @@ class _LoginScreen extends State<LoginScreen> {
                   TextButton(
                     child: const Text(
                       'Signin',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.red,
+                          fontWeight: FontWeight.w400,
                           fontFamily: 'MontserratAlternates'),
                     ),
                     onPressed: () {

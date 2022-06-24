@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './h.dart';
 import 'package:flutter_practice_1/loginScreen.dart';
+import 'package:rive/rive.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({
@@ -73,10 +74,16 @@ class _onboardingState extends State<onboarding> {
                       padding: const EdgeInsets.only(top: 40, left: 5),
                       child: Column(
                         children: [
-                          Image.asset(
-                            contencts[i].image,
-                            height: 300,
-                            width: 424,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 300,
+                              width: 300,
+                              child: RiveAnimation.asset(
+                                contencts[i].image,
+                                animations: [contencts[i].animation],
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 10,
