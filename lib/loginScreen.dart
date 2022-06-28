@@ -1,22 +1,20 @@
 // ignore_for_file: avoid_print
 import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:ui';
+import 'package:flutter/services.dart';
 import 'package:flutter_practice_1/signupScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice_1/HomePage.dart';
+import 'package:flutter_practice_1/mainPage/HomePage.dart';
 // ignore: import_of_legacy_library_into_null_safe, unused_import
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:rive/rive.dart';
+import 'mainPage/mainPage.dart';
+
 // ignore: depend_on_referenced_packages
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
   @override
   State<LoginScreen> createState() => _LoginScreen();
 }
@@ -26,34 +24,74 @@ class _LoginScreen extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   final passwordFocusNode = FocusNode();
   final emailFocusNode = FocusNode();
+  Alignment riveAlign = Alignment.topRight;
   String password = 'nupins123';
-  late Alignment riveAlign;
-  late String animationType;
+  String _fileName = 'assets/rive_character/new_file.riv';
+  String animationType = 'say hyy';
   late RiveAnimationController _riveAnimationController;
+  late Artboard _artboard;
   bool _isPlaying = false;
+  bool showPassword = true;
+  String errorMessage = '';
 
-  @override
   void _activeRiveAnimation(RiveAnimationController _controller) {
     if (_controller.isActive == false) {
       _controller.isActive = true;
     }
   }
 
+  // Widget rive_animation(String fn, String at, Alignment riveAlign) {
+  //   return RiveAnimation.asset(
+  //     fn,
+  //     fit: BoxFit.contain,
+  //     alignment: riveAlign,
+  //     animations: [at],
+  //     controllers: [_riveAnimationController],
+  //   );
+  // }
+
+  @override
   void initState() {
-    // emailFocusNode.addListener(() {
-    //   if (emailFocusNode.hasFocus) {
-    //     setState(() {
-    //       animationType = 'Yess';
-    //       riveAlign = Alignment.topLeft;
-    //     });
-    //   } else {
-    //     setState(() {
-    //       animationType = 'raise hands';
-    //       riveAlign = Alignment.topRight;
-    //     });
-    //   }
-    // });
+//     rootBundle.load(_fileName).then(
+// (data) async {
+//     // final riveFile = RiveFile().import(data);
+//     if (RiveFile().import(data)) {
+//         final riveArtBoard = riveFile.mainArtboard;
+//         riveArtBoard.addController(_riveAnimationController = SimpleAnimation(animationType));
+//         setState(() => _artboard = riveArtBoard);
+//     }
+// },
+// );
+    _riveAnimationController = OneShotAnimation(
+      animationType,
+      onStop: () {
+        setState(() {
+          _fileName = 'assets/rive_character/new_file_2.riv';
+        });
+      },
+    );
+    emailFocusNode.addListener(() {
+      if (emailFocusNode.hasFocus) {
+        setState(() {
+          riveAlign = Alignment.topRight;
+          _fileName = 'assets/rive_character/new_file_2.riv';
+          animationType = 'Blink';
+        });
+      } else {
+        setState(() {
+          riveAlign = Alignment.topRight;
+          _fileName = 'assets/rive_character/new_file_2.riv';
+          animationType = 'idle';
+        });
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _riveAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -122,20 +160,15 @@ class _LoginScreen extends State<LoginScreen> {
                       height: 130,
                       width: 400,
                       child: RiveAnimation.asset(
-                        'assets/rive_character/new_file.riv',
+                        _fileName,
                         fit: BoxFit.contain,
-                        alignment: emailFocusNode.hasFocus
-                            ? riveAlign = Alignment.topLeft
-                            : riveAlign = Alignment.topRight,
-                        animations: [
-                          emailFocusNode.hasFocus
-                              ? animationType = 'raise hand'
-                              : animationType = 'idle',
-                        ],
+                        alignment: riveAlign,
+                        animations: [animationType],
+                        //     controllers: [_riveAnimationController],
                         // controllers: [
                         //   _riveAnimationController,
                         // ],
-                        //     FlareActor(
+                        // child: FlareActor(
                         //   'assets/rive_character/Teddy_Login_Screen_example.flr',
                         //   alignment: Alignment.center,
                         //   fit: BoxFit.fitHeight,
@@ -143,7 +176,7 @@ class _LoginScreen extends State<LoginScreen> {
                         // ),
                       ),
                     ),
-                  ),
+                  )
                 ]),
               )),
               //email textfield
@@ -179,22 +212,46 @@ class _LoginScreen extends State<LoginScreen> {
                   onTapDown: (_) =>
                       _activeRiveAnimation(_riveAnimationController),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: showPassword,
                     controller: passwordController,
                     focusNode: passwordFocusNode,
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.remove_red_eye),
-                        border: OutlineInputBorder(),
-                        labelText: 'PASSWORD',
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Colors.blue,
-                        )),
-                        labelStyle: TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 3.0,
-                            fontFamily: 'MontserratAlternates'),
-                        prefixIcon: Icon(Icons.lock)),
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(
+                            () {
+                              showPassword = !showPassword;
+                            },
+                          );
+                        },
+                        icon: Icon(
+                          showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
+                      border: OutlineInputBorder(),
+                      labelText: 'PASSWORD',
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.blue,
+                      )),
+                      labelStyle: TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 3.0,
+                          fontFamily: 'MontserratAlternates'),
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 10),
+                alignment: Alignment.centerRight,
+                child: Text(
+                  errorMessage,
+                  style: TextStyle(
+                    color: Colors.red,
                   ),
                 ),
               ),
@@ -210,16 +267,23 @@ class _LoginScreen extends State<LoginScreen> {
                       if (passwordController.text.compareTo(password) == 0) {
                         setState(() {
                           animationType = 'Yess';
+                          errorMessage = "";
                         });
                         Timer(
                             Duration(seconds: 1),
                             () => Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        HomePage())));
+                                        MainPage())));
+                      } else if (passwordController.text.isEmpty) {
+                        setState(() {
+                          errorMessage = 'please fill the credentials.';
+                        });
                       } else {
                         setState(() {
                           animationType = 'Blink';
+                          errorMessage =
+                              "you've entered wrong password or email.";
                         });
                       }
                       (_) => _activeRiveAnimation(_riveAnimationController);
@@ -276,7 +340,7 @@ class _LoginScreen extends State<LoginScreen> {
               ),
               //google /linkedin login
               Container(
-                height: 120,
+                height: 110,
                 width: 400,
                 child: Align(
                   alignment: Alignment.center,

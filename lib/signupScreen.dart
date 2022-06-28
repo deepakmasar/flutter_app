@@ -1,11 +1,7 @@
-// ignore_for_file: avoid_print
-import 'dart:ui';
 import 'package:flutter_practice_1/LoginScreen.dart';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe, unused_import
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// ignore: depend_on_referenced_packages
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -15,9 +11,15 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreen extends State<SignupScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  FocusNode emailFocusNode = FocusNode();
   TextEditingController passwordController = TextEditingController();
+  FocusNode passwordFocusNode = FocusNode();
   TextEditingController repasswordController = TextEditingController();
+  FocusNode repassowrdFocusNode = FocusNode();
+  bool showPassword1 = true;
+  bool showPassword2 = true;
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +71,14 @@ class _SignupScreen extends State<SignupScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: nameController,
+                    controller: emailController,
+                    focusNode: passwordFocusNode,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Colors.blue,
+                        )),
                         labelText: 'E-MAIL',
                         labelStyle: TextStyle(
                             fontSize: 15,
@@ -83,10 +90,25 @@ class _SignupScreen extends State<SignupScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: showPassword1,
                     controller: passwordController,
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Colors.blue,
+                        )),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              showPassword1 = !showPassword1;
+                            });
+                          },
+                          icon: Icon(
+                            showPassword1
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
                         border: OutlineInputBorder(),
                         labelText: 'PASSWORD',
                         labelStyle: TextStyle(
@@ -99,10 +121,26 @@ class _SignupScreen extends State<SignupScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: showPassword2,
                     controller: repasswordController,
-                    decoration: const InputDecoration(
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                    focusNode: repassowrdFocusNode,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Colors.blue,
+                        )),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              showPassword2 = !showPassword2;
+                            });
+                          },
+                          icon: Icon(
+                            showPassword2
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
                         border: OutlineInputBorder(),
                         labelText: 'RE-ENTER PASSWORD',
                         labelStyle: TextStyle(
@@ -113,13 +151,42 @@ class _SignupScreen extends State<SignupScreen> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(right: 10),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                Container(
                     height: 70,
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Color.fromARGB(250, 249, 210, 210),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (passwordController.text
+                                .compareTo(repasswordController.text) ==
+                            0) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        } else if (passwordController.text.isEmpty ||
+                            repasswordController.text.isEmpty ||
+                            emailController.text.isEmpty) {
+                          setState(() {
+                            errorMessage = 'please fill the details.';
+                          });
+                        } else {
+                          setState(() {
+                            errorMessage = 'please check the password.';
+                          });
+                        }
+                      },
                       child: const Text(
                         'REGISTER',
                         style: TextStyle(

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice_1/HomeScreen.dart';
+import 'package:flutter_practice_1/splashScreen.dart';
+import 'package:sync_flutters_charts/charts.dart';
+import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {
+  // Register your license here
+  SyncfusionLicense.registerLicense(null);
   runApp(const MyApp());
 }
 

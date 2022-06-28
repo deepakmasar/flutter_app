@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './h.dart';
+import 'package:flutter_practice_1/onboardingPage/onBoardingPageList.dart';
+import 'package:flutter_practice_1/onboardingPage/onBoardingPageList.dart';
 import 'package:flutter_practice_1/loginScreen.dart';
 import 'package:rive/rive.dart';
 
@@ -14,6 +15,7 @@ class onboarding extends StatefulWidget {
 
 class _onboardingState extends State<onboarding> {
   int currentIndex = 0;
+
   late PageController _controller;
   @override
   void initState() {

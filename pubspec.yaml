@@ -8,7 +8,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
+# Both the version and 6the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # In Android, build-name is used as versionName while build-number used as versionCode.
 # Read more about Android versioning at https://developer.android.com/studio/publish/versioning
@@ -33,8 +33,10 @@ dependencies:
   get: any
   font_awesome_flutter: ^9.2.0
   flutter_auth_buttons: "0.10.0"
-  rive: ^0.7.28
+  rive: ^0.7.08
   floodfill_image: any
+  charts_flutter: ^0.2.0
+  sync_flutters_charts: ^17.3.14
 
 
   # The following adds the Cupertino Icons font to your application.

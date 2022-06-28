@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_1/loginScreen.dart';
-import 'package:flutter_practice_1/OnBoarding.dart';
+import 'package:flutter_practice_1/onboardingPage/OnBoarding.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,38 +41,37 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
               child: Image.asset(
             'assets/images/logo.png',
-            height: 300,
-            width: 300,
+            height: 400,
+            width: 400,
           )),
           Container(
-            padding: EdgeInsets.only(top: 150),
+            padding: EdgeInsets.only(top: 200),
             alignment: Alignment.center,
-            child: Row(children: const [
-              Padding(
-                  padding: EdgeInsets.symmetric(
-                horizontal: 57,
-              )),
-              Text(
-                'NUP',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  color: Color.fromARGB(255, 251, 19, 2),
-                  letterSpacing: 3.0,
-                ),
-              ),
-              Text(
-                'INS',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  color: Color.fromARGB(255, 15, 14, 14),
-                  letterSpacing: 3.0,
-                ),
-              ),
-            ]),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'NUP',
+                    style: TextStyle(
+                      fontSize: 45,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w900,
+                      color: Color.fromARGB(255, 251, 19, 2),
+                      letterSpacing: 3.0,
+                    ),
+                  ),
+                  Text(
+                    'INS',
+                    style: TextStyle(
+                      fontSize: 45,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w900,
+                      color: Color.fromARGB(255, 15, 14, 14),
+                      letterSpacing: 3.0,
+                    ),
+                  ),
+                ]),
           ),
         ]),
       )),
