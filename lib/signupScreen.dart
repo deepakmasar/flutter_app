@@ -163,7 +163,7 @@ class _SignupScreen extends State<SignupScreen> {
                   height: 120,
                   child: Row(children: [
                     Padding(padding: EdgeInsets.fromLTRB(80, 0, 0, 0)),
-                    FlatButton(
+                    MaterialButton(
                       height: 50,
                       minWidth: 50,
                       onPressed: () {},
@@ -190,7 +190,7 @@ class _SignupScreen extends State<SignupScreen> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
-                    FlatButton(
+                    MaterialButton(
                       height: 50,
                       minWidth: 50,
                       onPressed: () {},
