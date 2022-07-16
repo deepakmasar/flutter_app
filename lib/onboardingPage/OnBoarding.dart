@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import './h.dart';
-import 'package:flutter_practice_1/loginScreen.dart';
+
+import './onBoardingPageList.dart';
+
+import 'package:rive/rive.dart';
+
+import 'package:flutter_practice_1/authentication pages/loginScreen.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({
@@ -13,6 +17,7 @@ class onboarding extends StatefulWidget {
 
 class _onboardingState extends State<onboarding> {
   int currentIndex = 0;
+
   late PageController _controller;
   @override
   void initState() {
@@ -73,10 +78,16 @@ class _onboardingState extends State<onboarding> {
                       padding: const EdgeInsets.only(top: 40, left: 5),
                       child: Column(
                         children: [
-                          Image.asset(
-                            contencts[i].image,
-                            height: 300,
-                            width: 424,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 300,
+                              width: 300,
+                              child: RiveAnimation.asset(
+                                contencts[i].image,
+                                animations: [contencts[i].animation],
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 10,

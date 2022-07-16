@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sync_flutters_charts/charts.dart';
-import 'package:syncfusion_flutter_core/core.dart';
-import 'graph.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,33 +13,34 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 236, 233, 233),
       // safearea
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(verticalDirection: VerticalDirection.down, children: [
           // appbarHomePage1(),
           AppBar(
-            toolbarHeight: 120,
+            toolbarHeight: size.height / 6.8,
             backgroundColor: Color.fromARGB(255, 255, 235, 235),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            leadingWidth: 50,
+
             //leading icons
             leading: Container(
-              margin: EdgeInsets.only(left: 20),
+              margin: EdgeInsets.only(left: size.height * 0.03),
               padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
               child: Image.asset(
                 'assets/icons/globe.png',
               ),
             ),
-            centerTitle: false,
+            centerTitle: true,
             //search bar as title
             title: Center(
               child: Container(
-                height: 40,
-                width: 200,
+                height: size.height * 0.055,
+                width: size.width * 0.5,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -81,14 +79,14 @@ class HomePageState extends State<HomePage> {
               Container(
                 margin: EdgeInsets.fromLTRB(10, 5, 15, 0),
                 padding: EdgeInsets.fromLTRB(0, 35, 10, 0),
-                height: 45,
-                width: 45,
+                height: size.height * .06,
+                width: size.height * .06,
                 // decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
                 alignment: Alignment.topRight,
                 child: Image.asset(
                   'assets/images/profile.png',
-                  height: 40,
-                  width: 40,
+                  height: size.height * 0.055,
+                  width: size.height * 0.055,
                   fit: BoxFit.contain,
                 ),
               )
@@ -100,8 +98,8 @@ class HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-              height: 150,
-              width: 320,
+              height: size.height * 0.17,
+              width: size.width * 0.85,
               padding: EdgeInsets.all(0),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -118,7 +116,7 @@ class HomePageState extends State<HomePage> {
                 children: [
                   //profile completed
                   Container(
-                    width: 100,
+                    width: size.width * 0.25,
                     child: MaterialButton(
                       onPressed: () {},
                       child: Column(
@@ -130,13 +128,13 @@ class HomePageState extends State<HomePage> {
                                 style: TextStyle(fontSize: 10),
                               ),
                               Image.asset(
-                                'assets/images/Ellipse 14.png',
-                                height: 50,
-                                width: 50,
+                                'assets/images/Ellipse_14.png',
+                                height: size.height * 0.06,
+                                width: size.height * 0.06,
                               ),
                             ]),
                             Container(
-                              width: 53,
+                              width: size.width * 0.4,
                               padding: EdgeInsets.only(top: 10),
                               child: Text(
                                 'PROFILE COMPLETED',
@@ -158,31 +156,30 @@ class HomePageState extends State<HomePage> {
                   ),
                   //graph
                   Container(
-                    width: 100,
+                    width: size.width * 0.27,
                     child: MaterialButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => graph()));
-                      },
+                      onPressed: () {},
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Stack(alignment: Alignment.center, children: [
-                              Text(
-                                '80%',
-                                style: TextStyle(fontSize: 10),
-                              ),
-                              Image.asset(
-                                'assets/images/Ellipse 14.png',
-                                height: 50,
-                                width: 50,
-                              ),
-                            ]),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/Group52.png',
+                                    height: size.height * 0.07,
+                                    width: size.width * 0.3,
+                                  ),
+                                  Image.asset(
+                                    'assets/images/Group54.png',
+                                    width: size.width * 0.28,
+                                  )
+                                ]),
                             Container(
-                              width: 53,
+                              width: size.width * 0.25,
                               padding: EdgeInsets.only(top: 10),
                               child: Text(
-                                'PROFILE COMPLETED',
+                                'ACTIVITY',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 8,
@@ -201,34 +198,34 @@ class HomePageState extends State<HomePage> {
                   ),
                   //skills
                   Container(
-                    width: 100,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Stack(alignment: Alignment.center, children: [
-                            Text(
-                              '80%',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                            Image.asset(
-                              'assets/images/Ellipse 14.png',
-                              height: 50,
-                              width: 50,
-                            ),
-                          ]),
-                          Container(
-                            width: 53,
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text(
-                              'PROFILE COMPLETED',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 8,
-                                fontFamily: 'montserratalternates',
+                    width: size.width * 0.25,
+                    child: MaterialButton(
+                      onPressed: () {},
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Stack(alignment: Alignment.center, children: [
+                              Image.asset(
+                                'assets/images/Group57.png',
+                                height: size.height * 0.08,
+                                width: size.height * 0.25,
                               ),
-                            ),
-                          )
-                        ]),
+                              Image.asset('assets/images/Group56.png')
+                            ]),
+                            Container(
+                              width: size.width * 0.24,
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text(
+                                'SKILLS',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 8,
+                                  fontFamily: 'montserratalternates',
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
                   ),
                 ],
               ),
@@ -240,8 +237,8 @@ class HomePageState extends State<HomePage> {
             child: Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                height: 320,
-                width: 320,
+                height: size.height * 0.42,
+                width: size.width * 0.85,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.transparent),
@@ -257,8 +254,8 @@ class HomePageState extends State<HomePage> {
                     children: [
                       //introduction
                       Container(
-                        height: 170,
-                        width: 230,
+                        height: size.height * 0.238,
+                        width: size.width * 0.59,
                         alignment: Alignment.topLeft,
                         padding: EdgeInsets.fromLTRB(10, 15, 0, 0),
                         child: Column(children: [
@@ -392,9 +389,9 @@ class HomePageState extends State<HomePage> {
                       Container(
                         alignment: Alignment.topCenter,
                         child: Image.asset(
-                          'assets/images/download (1) 1.png',
-                          height: 80,
-                          width: 80,
+                          'assets/images/download(1)_1.png',
+                          height: size.height * 0.15,
+                          width: size.width * 0.2,
                         ),
                       )
                     ],
@@ -424,8 +421,8 @@ class HomePageState extends State<HomePage> {
                               ),
                               Image.asset(
                                 'assets/icons/arrow-down-sign-to-navigate.png',
-                                height: 15,
-                                width: 15,
+                                height: size.height * 0.03,
+                                width: size.height * 0.03,
                               ),
                             ]),
                         //portfolio images
@@ -437,22 +434,22 @@ class HomePageState extends State<HomePage> {
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
                                 child:
-                                    Image.asset('assets/images/image 10.png'),
+                                    Image.asset('assets/images/image_10.png'),
                               ),
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
                                 child:
-                                    Image.asset('assets/images/image 11.png'),
+                                    Image.asset('assets/images/image_11.png'),
                               ),
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
                                 child:
-                                    Image.asset('assets/images/image 10.png'),
+                                    Image.asset('assets/images/image_10.png'),
                               ),
                               Container(
                                 margin: EdgeInsets.fromLTRB(0, 10, 5, 0),
                                 child:
-                                    Image.asset('assets/images/image 11.png'),
+                                    Image.asset('assets/images/image_11.png'),
                               ),
                             ],
                           ),

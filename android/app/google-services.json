@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "32298490396",
+    "project_id": "nupins-app",
+    "storage_bucket": "nupins-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32298490396:android:45678ca2064f015ac39dd9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_practice_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32298490396-ostihb1lqjnfj1ioj7mntgiahsu984r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo4izqHUZnRFy-1jF8z-A39Co6qqQu95c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32298490396-ostihb1lqjnfj1ioj7mntgiahsu984r3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
