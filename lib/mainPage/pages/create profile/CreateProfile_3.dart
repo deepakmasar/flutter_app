@@ -23,7 +23,7 @@ class CreateProfile3State extends State<CreateProfile3> {
                 child: Row(
                   children: [
                     Container(
-                      width: 240,
+                      width: size.width * 0.64,
                       child: Expanded(
                         child: Divider(
                           color: Color.fromARGB(255, 130, 228, 133),
@@ -50,7 +50,7 @@ class CreateProfile3State extends State<CreateProfile3> {
             ),
             Container(
               margin: EdgeInsets.only(top: 10),
-              width: 300,
+              width: size.width * 0.9,
               child: Row(
                 children: [
                   Text(
@@ -75,8 +75,8 @@ class CreateProfile3State extends State<CreateProfile3> {
             ),
             Container(
               margin: EdgeInsets.only(top: 30),
-              height: 480,
-              width: 359,
+              height: size.height / 1.65,
+              width: size.width * 0.9,
               padding: EdgeInsets.fromLTRB(24, 10, 24, 0),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -113,12 +113,12 @@ class CreateProfile3State extends State<CreateProfile3> {
                   ),
                   //skills
                   Container(
-                    height: 100,
+                    height: size.height / 8,
                     child: Container(
                       margin: EdgeInsets.only(
                         bottom: 5,
                       ),
-                      height: 40,
+                      height: size.height / 20,
                       child: TextField(
                         style: TextStyle(fontSize: 10, height: 0.5),
                         autofocus: false,
@@ -130,7 +130,6 @@ class CreateProfile3State extends State<CreateProfile3> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(
                                 color: Colors.grey,
-                                width: 40.0,
                               )),
                           labelText: 'SKILLS',
                           labelStyle: TextStyle(
@@ -163,10 +162,10 @@ class CreateProfile3State extends State<CreateProfile3> {
                     ],
                   ),
                   Container(
-                    height: 100,
+                    height: size.height / 8,
                     child: Column(children: [
                       Container(
-                        height: 30,
+                        height: size.height / 21,
                         margin: EdgeInsets.only(top: 10),
                         padding: EdgeInsets.only(left: 5, right: 5),
                         decoration: BoxDecoration(
@@ -178,26 +177,26 @@ class CreateProfile3State extends State<CreateProfile3> {
                           children: [
                             Icon(
                               Icons.circle_rounded,
-                              size: 10.0,
+                              size: size.width / 70,
                             ),
                             Text(
                               'NOBEL PRIZE',
                               style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: size.width / 35,
                                   letterSpacing: 2.0,
                                   fontFamily: 'MontserratAlternates'),
                             ),
                             Text(
                               '2021',
                               style: TextStyle(
-                                  fontSize: 8,
+                                  fontSize: size.width / 50,
                                   letterSpacing: 3.0,
                                   fontFamily: 'MontserratAlternates'),
                             ),
                             Text(
                               'It was my great work for my physic project.',
                               style: TextStyle(
-                                  fontSize: 5,
+                                  fontSize: size.width / 80,
                                   letterSpacing: 1.0,
                                   fontFamily: 'MontserratAlternates'),
                             )
@@ -215,7 +214,7 @@ class CreateProfile3State extends State<CreateProfile3> {
                   //award name textfield
                   Container(
                     margin: EdgeInsets.only(bottom: 5),
-                    height: 40,
+                    height: size.height / 20,
                     child: TextField(
                       style: TextStyle(fontSize: 10, height: 0.5),
                       autofocus: false,
@@ -240,7 +239,7 @@ class CreateProfile3State extends State<CreateProfile3> {
                   //year textfield
                   Container(
                     margin: EdgeInsets.only(bottom: 5),
-                    height: 40,
+                    height: size.height / 20,
                     child: TextField(
                       style: TextStyle(fontSize: 10, height: 0.5),
                       autofocus: false,
@@ -267,7 +266,7 @@ class CreateProfile3State extends State<CreateProfile3> {
                     margin: EdgeInsets.only(
                       bottom: 5,
                     ),
-                    height: 40,
+                    height: size.height / 20,
                     child: TextField(
                       style: TextStyle(fontSize: 10, height: 0.5),
                       autofocus: false,
@@ -304,7 +303,7 @@ class CreateProfile3State extends State<CreateProfile3> {
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(color: Colors.transparent),
-                          width: 120,
+                          width: size.width / 3,
                           child: Text(
                             'ADD REWARD',
                             style: TextStyle(

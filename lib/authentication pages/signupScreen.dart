@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
-import 'package:flutter_practice_1/mainPage/pages/resume%20page/resumeAnalysis.dart';
+import 'package:flutter_practice_1/mainPage/pages/resume page/resumeAnalysis.dart';
 import 'loginScreen.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+// import 'package:sync_flutters_charts/charts.dart';
+// import 'package:syncfusion_flutter_core/core.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,12 +25,12 @@ class HomePageState extends State<HomePage> {
         child: Column(verticalDirection: VerticalDirection.down, children: [
           // appbarHomePage1(),
           AppBar(
-            toolbarHeight: size.height / 6.8,
+            toolbarHeight: size.height * 0.16,
             backgroundColor: Color.fromARGB(255, 255, 235, 235),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-
+            leadingWidth: size.height * 0.08,
             //leading icons
             leading: Container(
               margin: EdgeInsets.only(left: size.height * 0.03),
@@ -35,7 +39,7 @@ class HomePageState extends State<HomePage> {
                 'assets/icons/globe.png',
               ),
             ),
-            centerTitle: true,
+            centerTitle: false,
             //search bar as title
             title: Center(
               child: Container(
@@ -98,7 +102,7 @@ class HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-              height: size.height * 0.17,
+              height: size.height * 0.2,
               width: size.width * 0.85,
               padding: EdgeInsets.all(0),
               decoration: BoxDecoration(
@@ -199,33 +203,30 @@ class HomePageState extends State<HomePage> {
                   //skills
                   Container(
                     width: size.width * 0.25,
-                    child: MaterialButton(
-                      onPressed: () {},
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(alignment: Alignment.center, children: [
-                              Image.asset(
-                                'assets/images/Group57.png',
-                                height: size.height * 0.08,
-                                width: size.height * 0.25,
-                              ),
-                              Image.asset('assets/images/Group56.png')
-                            ]),
-                            Container(
-                              width: size.width * 0.24,
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text(
-                                'SKILLS',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  fontFamily: 'montserratalternates',
-                                ),
-                              ),
-                            )
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Stack(alignment: Alignment.center, children: [
+                            Image.asset(
+                              'assets/images/Group57.png',
+                              height: size.height * 0.08,
+                              width: size.height * 0.25,
+                            ),
+                            Image.asset('assets/images/Group56.png')
                           ]),
-                    ),
+                          Container(
+                            width: size.width * 0.24,
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text(
+                              'SKILLS',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontFamily: 'montserratalternates',
+                              ),
+                            ),
+                          )
+                        ]),
                   ),
                 ],
               ),
@@ -237,7 +238,7 @@ class HomePageState extends State<HomePage> {
             child: Container(
                 alignment: Alignment.center,
                 margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                height: size.height * 0.42,
+                height: size.height * 0.44,
                 width: size.width * 0.85,
                 decoration: BoxDecoration(
                     color: Colors.white,

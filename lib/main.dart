@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice_1/mainPage/mainPage.dart';
 import 'package:flutter_practice_1/mainPage/pages/home%20page/HomePage.dart';
 import 'package:flutter_practice_1/mainPage/pages/profile%20page/newedituser.dart';
-import './splashScreen.dart';
+import 'splash screen/splashScreen.dart';
 // import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {

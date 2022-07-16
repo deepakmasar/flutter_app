@@ -3,8 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_practice_1/authentication%20pages/loginScreen.dart';
-import 'package:flutter_practice_1/onboardingPage/OnBoarding.dart';
+import '../authentication pages/loginScreen.dart';
+
+import '../onboardingPage/OnBoarding.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,9 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var height = size.height;
-    var width = size.width;
     Timer(
         const Duration(seconds: 4),
         () => Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -28,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
           child: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-        width: width / 1,
-        height: height / 1,
+        width: 400,
+        height: 1000,
         decoration: const BoxDecoration(
             gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -44,16 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
               child: Image.asset(
             'assets/images/logo.png',
-            height: height / 1,
-            width: width / 1.2,
+            height: 400,
+            width: 400,
           )),
           Container(
-            padding: EdgeInsets.only(top: height / 5),
+            padding: EdgeInsets.only(top: 200),
             alignment: Alignment.center,
             child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text(
                     'NUP',
                     style: TextStyle(
