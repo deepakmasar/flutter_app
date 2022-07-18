@@ -1,22 +1,28 @@
 class UserModel {
   String? email;
-  String? password;
+  String? newPassword;
+  String? confirmNewPassword;
 
-  UserModel({this.email, this.password});
+  UserModel({
+    this.email,
+    this.newPassword,
+    this.confirmNewPassword,
+  });
 
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
-      email: map['email'],
-      password: map['password'],
-    );
+        email: map['email'],
+        newPassword: map['newPassword'],
+        confirmNewPassword: map['confirmNewPassword']);
   }
 
   // sending data to our server
   Map<String, dynamic> toMap() {
     return {
       'email': email,
-      'password': password,
+      'newPassword': newPassword,
+      'confirmNewPassword': confirmNewPassword,
     };
   }
 }

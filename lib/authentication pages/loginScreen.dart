@@ -1,6 +1,9 @@
 // ignore_for_file: avoid_print
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:flutter_practice_1/services/api_services.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
+import '../models/login models/login_request_model.dart';
 import 'signupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_1/mainPage/pages/home%20page/HomePage.dart';
@@ -11,6 +14,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_practice_1/mainPage/mainPage.dart';
+import 'package:snippet_coder_utils/FormHelper.dart';
+// import 'package:snippet_coder_utils/ProgressHUD.dart';
+import 'package:flutter_practice_1/authentication pages/progressHUD.dart';
+import '../config.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -22,80 +30,43 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreen extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   final passwordFocusNode = FocusNode();
   final emailFocusNode = FocusNode();
-  Alignment riveAlign = Alignment.topRight;
-  String password = 'nupins123';
+
+  // Alignment riveAlign = Alignment.topRight;
   String _fileName = 'assets/rive_character/new_file.riv';
   String animationType = 'WaveHand';
-  late RiveAnimationController _riveAnimationController;
-  late Artboard _artboard;
-  bool _isPlaying = false;
+
   bool showPassword = true;
-  String errorMessage = '';
+  bool isAPIcallProcess = false;
 
-  void _activeRiveAnimation(RiveAnimationController _controller) {
-    if (_controller.isActive == false) {
-      _controller.isActive = true;
-    }
-  }
+  String? emailError = null;
+  String? passwordError = null;
 
-  // Widget rive_animation(String fn, String at, Alignment riveAlign) {
-  //   return RiveAnimation.asset(
-  //     fn,
-  //     fit: BoxFit.contain,
-  //     alignment: riveAlign,
-  //     animations: [at],
-  //     controllers: [_riveAnimationController],
-  //   );
-  // }
+  late LoginRequestModel requestModel;
+
+  final globalFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-//     rootBundle.load(_fileName).then(
-// (data) async {
-//     // final riveFile = RiveFile().import(data);
-//     if (RiveFile().import(data)) {
-//         final riveArtBoard = riveFile.mainArtboard;
-//         riveArtBoard.addController(_riveAnimationController = SimpleAnimation(animationType));
-//         setState(() => _artboard = riveArtBoard);
-//     }
-// },
-// );
-    _riveAnimationController = OneShotAnimation(
-      animationType,
-      onStop: () {
-        setState(() {
-          _fileName = 'assets/rive_character/new_file_2.riv';
-        });
-      },
-    );
-    emailFocusNode.addListener(() {
-      if (emailFocusNode.hasFocus) {
-        setState(() {
-          riveAlign = Alignment.topRight;
-          _fileName = 'assets/rive_character/new_file_2.riv';
-          animationType = 'Blink';
-        });
-      } else {
-        setState(() {
-          riveAlign = Alignment.topRight;
-          _fileName = 'assets/rive_character/new_file_2.riv';
-          animationType = 'idle';
-        });
-      }
-    });
     super.initState();
+    requestModel = LoginRequestModel();
   }
 
   @override
   void dispose() {
-    _riveAnimationController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return ProgressHUD(inAsyncCall: isAPIcallProcess, child: loginUI(context));
+  }
+
+  Widget loginUI(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -107,9 +78,6 @@ class _LoginScreen extends State<LoginScreen> {
               child: ListView(
                 children: <Widget>[
                   Center(
-                      child: GestureDetector(
-                    onTapDown: (_) =>
-                        _activeRiveAnimation(_riveAnimationController),
                     child: Stack(children: [
                       //nupins logo
                       Container(
@@ -163,9 +131,9 @@ class _LoginScreen extends State<LoginScreen> {
                           child: RiveAnimation.asset(
                             _fileName,
                             fit: BoxFit.contain,
-                            alignment: riveAlign,
+                            alignment: Alignment.bottomRight,
                             animations: [animationType],
-                            controllers: [_riveAnimationController],
+
                             // controllers: [
                             //   _riveAnimationController,
                             // ],
@@ -179,7 +147,7 @@ class _LoginScreen extends State<LoginScreen> {
                         ),
                       )
                     ]),
-                  )),
+                  ),
                   Container(
                     margin: EdgeInsets.only(left: 10, right: 10),
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -187,173 +155,235 @@ class _LoginScreen extends State<LoginScreen> {
                       color: Color.fromARGB(255, 243, 243, 243),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Column(
-                      children: [
-                        //email textfield
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          margin: EdgeInsets.only(top: 10),
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: emailController,
-                            validator: (input) => !input!.contains('@')
-                                ? 'email ID is not valid'
-                                : null,
-                            focusNode: emailFocusNode,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: Colors.blue,
-                              )),
-                              hintText: 'E-MAIL',
-                              hintStyle: TextStyle(
-                                  fontSize: 15,
-                                  letterSpacing: 3.0,
-                                  fontFamily: 'MontserratAlternates'),
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: emailFocusNode.hasFocus
-                                    ? Colors.blue
-                                    : Colors.black,
+                    child: Form(
+                        key: globalFormKey,
+                        child: Column(
+                          children: [
+                            //email textfield
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              margin: EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                onSaved: (newValue) =>
+                                    requestModel.email = newValue,
+                                controller: emailController,
+                                validator: (input) {
+                                  if (input!.contains('@') &&
+                                      input.contains(".com")) {
+                                    setState(() {
+                                      emailError = null;
+                                    });
+                                  } else if (input.isEmpty) {
+                                    setState(() {
+                                      emailError = 'please enter a email.';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      emailError =
+                                          'please enter a valid email.';
+                                    });
+                                  }
+                                },
+                                focusNode: emailFocusNode,
+                                autofocus: false,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                    color: Colors.blue,
+                                  )),
+                                  hintText: 'E-MAIL',
+                                  hintStyle: TextStyle(
+                                      fontSize: 15,
+                                      letterSpacing: 3.0,
+                                      fontFamily: 'MontserratAlternates'),
+                                  prefixIcon: Icon(
+                                    Icons.email_outlined,
+                                    color: emailFocusNode.hasFocus
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        //password textfield
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          margin: EdgeInsets.only(top: 20),
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: GestureDetector(
-                            onTapDown: (_) =>
-                                _activeRiveAnimation(_riveAnimationController),
-                            child: TextField(
-                              obscureText: showPassword,
-                              controller: passwordController,
-                              focusNode: passwordFocusNode,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        showPassword = !showPassword;
-                                      },
-                                    );
-                                  },
-                                  icon: Icon(
-                                    showPassword
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                            //email error
+                            if (emailError != null)
+                              Container(
+                                padding: EdgeInsets.only(right: 10),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  emailError!,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            //password textfield
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              margin: EdgeInsets.only(
+                                  top: emailError == null ? 20 : 0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: TextFormField(
+                                obscureText: showPassword,
+                                controller: passwordController,
+                                onSaved: (newValue) =>
+                                    requestModel.password = newValue,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    setState(() {
+                                      passwordError =
+                                          "please enter a password.";
+                                    });
+                                  } else if (value.length < 5) {
+                                    setState(() {
+                                      passwordError =
+                                          'password should contain atleast 5 character.';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      passwordError = null;
+                                    });
+                                  }
+                                },
+                                focusNode: passwordFocusNode,
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(
+                                        () {
+                                          showPassword = !showPassword;
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(
+                                      showPassword
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: passwordFocusNode.hasFocus
+                                          ? Colors.blue
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'PASSWORD',
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                    color: Colors.blue,
+                                  )),
+                                  hintStyle: TextStyle(
+                                      fontSize: 15,
+                                      letterSpacing: 3.0,
+                                      fontFamily: 'MontserratAlternates'),
+                                  prefixIcon: Icon(
+                                    Icons.lock_outline_rounded,
                                     color: passwordFocusNode.hasFocus
                                         ? Colors.blue
                                         : Colors.black,
                                   ),
                                 ),
-                                border: OutlineInputBorder(),
-                                hintText: 'PASSWORD',
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Colors.blue,
+                              ),
+                            ),
+                            //password error
+                            if (passwordError != null)
+                              Container(
+                                padding: EdgeInsets.only(right: 10),
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  passwordError!,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            //login button
+                            Container(
+                                width: 400,
+                                height: 60,
+                                margin: EdgeInsets.only(
+                                  top: passwordError == null ? 20 : 0,
+                                ),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(250, 249, 210, 210),
+                                  ),
+                                  onPressed: () {
+                                    if (validateAndSave() == true) {
+                                      setState(() {
+                                        isAPIcallProcess = true;
+                                      });
+
+                                      APIService.login(requestModel)
+                                          .then((value) {
+                                        if (value) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MainPage()));
+                                        } else {
+                                          // Fluttertoast.showToast(
+                                          //     msg: 'This is toast notification',
+                                          //     toastLength: Toast.LENGTH_SHORT,
+                                          //     gravity: ToastGravity.BOTTOM,
+                                          //     timeInSecForIosWeb: 1,
+                                          //     backgroundColor: Colors.red,
+                                          //     textColor: Colors.yellow);
+                                          FormHelper.showSimpleAlertDialog(
+                                            context,
+                                            Config.appName,
+                                            "Invalid Username/Password !!",
+                                            "OK",
+                                            () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        }
+                                        setState(() {
+                                          isAPIcallProcess = false;
+                                        });
+                                      });
+
+                                      print(requestModel.toJson());
+                                    }
+                                  },
+                                  child: const Text(
+                                    'LOGIN',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'MontserratAlternates',
+                                      letterSpacing: 3.0,
+                                      color: Color.fromARGB(255, 79, 79, 79),
+                                    ),
+                                  ),
                                 )),
-                                hintStyle: TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 3.0,
-                                    fontFamily: 'MontserratAlternates'),
-                                prefixIcon: Icon(
-                                  Icons.lock_outline_rounded,
-                                  color: passwordFocusNode.hasFocus
-                                      ? Colors.blue
-                                      : Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(right: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            errorMessage,
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                        //login button
-                        Container(
-                            width: 400,
-                            height: 60,
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(250, 249, 210, 210),
-                              ),
-                              onPressed: () {
-                                if (passwordController.text
-                                        .compareTo(password) ==
-                                    0) {
-                                  setState(() {
-                                    animationType = 'Yess';
-                                    errorMessage = "";
-                                  });
-                                  Timer(
-                                      Duration(seconds: 1),
-                                      () => Navigator.of(context)
-                                          .pushReplacement(MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  MainPage())));
-                                } else if (passwordController.text.isEmpty) {
-                                  setState(() {
-                                    errorMessage =
-                                        'please fill the credentials.';
-                                  });
-                                } else {
-                                  setState(() {
-                                    animationType = 'Blink';
-                                    errorMessage =
-                                        "you've entered wrong password or email.";
-                                  });
-                                }
-                                (_) => _activeRiveAnimation(
-                                    _riveAnimationController);
-                              },
+                            Padding(padding: EdgeInsets.all(10)),
+                            //forgot password
+                            TextButton(
+                              onPressed: () {},
                               child: const Text(
-                                'LOGIN',
+                                'Forgot Password ?',
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'MontserratAlternates',
-                                  letterSpacing: 3.0,
-                                  color: Color.fromARGB(255, 79, 79, 79),
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
                               ),
-                            )),
-                        Padding(padding: EdgeInsets.all(10)),
-                        //forgot password
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Forgot Password ?',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
+                          ],
+                        )),
                   ),
 
                   //divider
@@ -425,7 +455,7 @@ class _LoginScreen extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            // Padding(padding: EdgeInsets.fromLTRB(60, 0, 0, 0)),
+                            // linkedin button
                             MaterialButton(
                               height: 50,
                               minWidth: 50,
@@ -460,7 +490,7 @@ class _LoginScreen extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       const Text(
-                        'Does not have account?',
+                        'Do not have account?',
                         style: TextStyle(
                             fontSize: 20,
                             color: Color.fromARGB(255, 101, 94, 94),
@@ -480,7 +510,7 @@ class _LoginScreen extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignupScreen()));
+                                  builder: (context) => signupScreen()));
                         },
                       )
                     ],
@@ -488,5 +518,14 @@ class _LoginScreen extends State<LoginScreen> {
                 ],
               )),
         ));
+  }
+
+  bool validateAndSave() {
+    final form = globalFormKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 }

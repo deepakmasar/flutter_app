@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice_1/authentication%20pages/loginScreen.dart';
 import 'package:flutter_practice_1/mainPage/mainPage.dart';
 import 'package:flutter_practice_1/mainPage/pages/home%20page/HomePage.dart';
 import 'package:flutter_practice_1/mainPage/pages/profile%20page/newedituser.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainPage(),
+      home: LoginScreen(),
     );
   }
 }
